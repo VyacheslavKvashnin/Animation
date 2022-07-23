@@ -21,9 +21,23 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemPinkColor"/>
                             </view>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="PSU-zU-Rim">
+                                <rect key="frame" x="14" y="624" width="386" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="vLI-KE-8Sy"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="slider:" destination="BYZ-38-t0r" eventType="valueChanged" id="dtJ-ap-b3r"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="PSU-zU-Rim" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="2cA-8Z-lqm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="PSU-zU-Rim" secondAttribute="bottom" constant="218" id="Gz2-ec-oRQ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PSU-zU-Rim" secondAttribute="trailing" constant="16" id="L2h-F8-b3p"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="viewRed" destination="fD0-qc-9wk" id="NP9-uv-jJ0"/>

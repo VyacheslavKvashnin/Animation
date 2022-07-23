@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var viewRed: UIView!
+
     
     var animator: UIViewPropertyAnimator!
     
@@ -58,17 +59,62 @@ class ViewController: UIViewController {
 //        } completion: { _ in }
 
         
-        animator = UIViewPropertyAnimator(duration: 3.0,
-                                          curve: .easeInOut,
-                                          animations: {
-            self.viewRed.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-            self.viewRed.backgroundColor = .cyan
-        })
+        animator = UIViewPropertyAnimator(duration: 3.0, curve: .easeInOut)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapDid))
+        viewRed.addGestureRecognizer(tapGesture)
+        
+        let tapGestureReturn = UITapGestureRecognizer(target: self, action: #selector(tapDidReturn))
+        tapGestureReturn.numberOfTapsRequired = 2
+        viewRed.addGestureRecognizer(tapGestureReturn)
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(didPan))
+        viewRed.addGestureRecognizer(panGesture)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    @objc
+    func didPan(_ panGesture: UIPanGestureRecognizer) {
+        let newPosition = panGesture.translation(in: self.view)
+        
+        let currentX = viewRed.center.x
+        let currentY = viewRed.center.y
+        
+        viewRed.center = CGPoint(x: currentX + newPosition.x, y: currentY + newPosition.y)
+        
+        panGesture.setTranslation(.zero, in: self.view)
+    }
+    
+    @objc func tapDid() {
+        
+        animator.addAnimations {
+            self.viewRed.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            self.viewRed.backgroundColor = .cyan
+            self.viewRed.layer.cornerRadius = 20
+        }
+        
+        animator.addCompletion { point in
+            print("Animated completion")
+        }
+        
         animator.startAnimation()
+    }
+    
+    @objc func tapDidReturn() {
+        
+        animator.addAnimations {
+            self.viewRed.transform = .identity
+            self.viewRed.backgroundColor = .systemPink
+            self.viewRed.layer.cornerRadius = 0
+        }
+        
+        animator.startAnimation()
+    }
+    
+    
+    
+    
+    @IBAction func slider(_ sender: UISlider) {
+        animator.fractionComplete = CGFloat(sender.value) / 100
     }
 }
 
